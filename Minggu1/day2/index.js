@@ -28,45 +28,80 @@ const server = http.createServer((req, res) => {
     const url = req.url
     res.statusCode = 200
     res.setHeader('Content-Type', 'application/json')
+    let response = {}
     switch (url) {
         case '/ucup':
-            res.write('Hello Ucup')
-            break;
+            response = {
+                status: 'success',
+                data: 'Hello Ucup'
+            }
+            break
         case '/otong':
-            res.write('Hello otong')
-            break;
+            response = {
+                status: 'success',
+                data: 'Hello Otong'
+            }
+            break
         case '/zidan':
-            res.write('Hello Zidan')
+            response = {
+                status: 'success',
+                data: 'Hello Zidan'
+            }
+            break
         case '/dunia':
-            res.write('Hello World')
-            break;
+            response = {
+                status: 'success',
+                data: 'Hello World'
+            }
+            break
         case '/time':
-            res.write('waktu adalah uang')
-            break;
+            response = {
+                status: 'success',
+                data: 'waktu adalah uang'
+            }
+            break
         case '/kota':
-            res.write('Yogyakarta')
-            break;
+            response = {
+                status: 'success',
+                data: 'Yogyakarta'
+            }
+            break
         case '/pecel':
-            res.write('Pecel enak')
-            break;
+            response = {
+                status: 'success',
+                data: 'Pecel enak'
+            }
+            break
         case '/ayam':
-            res.write('Ayam Bakar')
-            break;
+            response = {
+                status: 'success',
+                data: 'Ayam Bakar'
+            }
+            break
         case '/mie':
-            res.write('Mie ayam')
-            break;
+            response = {
+                status: 'success',
+                data: 'Mie Ayam'
+            }
+            break
         case '/kahfi':
-            res.write('kahfi elek')
-            break;
+            response = {
+                status: 'success',
+                data: 'kahfi elek'
+            }
+            break
         default:
-            res.write('page not found')
-            break;
+            response = {
+                status: 'error',
+                message: 'Page not found'
+            }
+            break
     }
-    res.end()
+    res.end(JSON.stringify(response))
 })
 
 const hostname = '127.0.0.1'
 const port = 3000
 server.listen(port, hostname, () => {
     console.log(`Server running at ${hostname}:${port}`)
-}) 
+})
