@@ -1,7 +1,7 @@
 import { log } from 'console';
 import http from 'http'
 import { hello } from './hello.js';
-import moment from 'moment/moment.js';
+import moment from 'moment';
 import { url } from 'inspector';
 
 // const server = http.createServer((req, res) => {
