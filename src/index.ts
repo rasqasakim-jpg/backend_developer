@@ -22,9 +22,9 @@ interface Product {
 
 // DATA PRODUK
 let products: Product[] = [
-  { id: 1, nama: "Laptop Gaming", deskripsi: "Intel i7, RTX 3060", harga: 15000000 },
-  { id: 2, nama: "Keyboard Mekanikal", deskripsi: "Blue Switch, RGB", harga: 800000 },
-  { id: 3, nama: "Mouse Wireless", deskripsi: "Ergonomic, Silent Click", harga: 300000 }
+  { id: 1, nama: "Celana Jeans", deskripsi: "Baggy Jeans Loose Oversize", harga: 177900 },
+  { id: 2, nama: "Kemeja", deskripsi: "kemeja lengan panjang kasual slimfit", harga: 188000 },
+  { id: 3, nama: "Sendal", deskripsi: "Sandal Crocs Unisex Classic Clog", harga: 230000 }
 ];
 
 // ==================== RESPONSE HELPER ====================
@@ -122,7 +122,7 @@ const asyncHandler = (fn: Function) => {
 // HOME
 app.get("/", (req: Request, res: Response) => {
   const time = Date.now() - (req as any).startTime;
-  successResponse(res, "API Produk Hari 4 aktif!", { waktuProses: `${time}ms` });
+  successResponse(res, "API Produk aktif!", { waktuProses: `${time}ms` });
 });
 
 // GET ALL PRODUK
