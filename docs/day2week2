@@ -1,0 +1,177 @@
+Microsoft Windows [Version 10.0.26100.7171]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Program Files\PostgreSQL\18\pgAdmin 4\runtime>"C:\Program Files\PostgreSQL\18\pgAdmin 4\runtime\psql.exe"
+ "host=localhost port=5432 dbname=toko_laptop_db user=postgres sslmode=prefer connect_timeout=10" 2>>&1
+psql (18.1)
+WARNING: Console code page (437) differs from Windows code page (1252)
+         8-bit characters might not work correctly. See psql reference
+         page "Notes for Windows users" for details.
+Type "help" for help.
+
+toko_laptop_db=# CREATE TABLE categories (
+toko_laptop_db(#     id SERIAL PRIMARY KEY,
+toko_laptop_db(#     name VARCHAR(50) NOT NULL
+toko_laptop_db(# );
+ERROR:  relation "categories" already exists
+toko_laptop_db=#
+toko_laptop_db=# \d categories
+                                   Table "public.categories"
+ Column |         Type          | Collation | Nullable |                Default
+--------+-----------------------+-----------+----------+----------------------------------------
+ id     | integer               |           | not null | nextval('categories_id_seq'::regclass)
+ name   | character varying(50) |           | not null |
+Indexes:
+    "categories_pkey" PRIMARY KEY, btree (id)
+Referenced by:
+    TABLE "items" CONSTRAINT "fk_category" FOREIGN KEY (category_id) REFERENCES categories(id)
+
+
+toko_laptop_db=# SELECT * FROM categories;
+ id |   name
+----+----------
+  1 | Laptop
+  2 | Mouse
+  3 | Keyboard
+(3 rows)
+
+
+toko_laptop_db=# \d items
+                                      Table "public.items"
+   Column    |          Type          | Collation | Nullable |              Default
+-------------+------------------------+-----------+----------+-----------------------------------
+ id          | integer                |           | not null | nextval('items_id_seq'::regclass)
+ name        | character varying(100) |           | not null |
+ category    | character varying(50)  |           | not null |
+ price       | bigint                 |           | not null |
+ is_active   | boolean                |           |          | true
+ category_id | integer                |           |          |
+Indexes:
+    "items_pkey" PRIMARY KEY, btree (id)
+Foreign-key constraints:
+    "fk_category" FOREIGN KEY (category_id) REFERENCES categories(id)
+
+
+toko_laptop_db=# UPDATE items SET category_id = 1 WHERE category = 'Laptop';
+UPDATE 2
+toko_laptop_db=# UPDATE items SET category_id = 2 WHERE category = 'Mouse';
+UPDATE 0
+toko_laptop_db=# UPDATE items SET category_id = 3 WHERE category = 'Keyboard';
+UPDATE 0
+toko_laptop_db=#
+toko_laptop_db=# SELECT id, name, category, category_id FROM items;
+ id |        name        |  category  | category_id
+----+--------------------+------------+-------------
+  3 | Samsung Galaxy S23 | Smartphone |
+  4 | Sony WH-1000XM5    | Headphone  |
+  2 | ASUS ROG Strix G15 | Laptop     |           1
+  1 | MacBook Air M2     | Laptop     |           1
+(4 rows)
+
+
+toko_laptop_db=# SELECT
+toko_laptop_db-#     items.id,
+toko_laptop_db-#     items.name,
+toko_laptop_db-#     items.price,
+toko_laptop_db-#     categories.name AS category_name
+toko_laptop_db-# FROM items
+toko_laptop_db-# JOIN categories
+toko_laptop_db-#     ON items.category_id = categories.id;
+ id |        name        |  price   | category_name
+----+--------------------+----------+---------------
+  2 | ASUS ROG Strix G15 | 20000000 | Laptop
+  1 | MacBook Air M2     | 25000000 | Laptop
+(2 rows)
+
+
+toko_laptop_db=# SELECT
+toko_laptop_db-#     categories.name AS category,
+toko_laptop_db-#     COUNT(items.id) AS total_barang
+toko_laptop_db-# FROM categories
+toko_laptop_db-# LEFT JOIN items
+toko_laptop_db-#     ON items.category_id = categories.id
+toko_laptop_db-# GROUP BY categories.name
+toko_laptop_db-# ORDER BY total_barang DESC;
+ category | total_barang
+----------+--------------
+ Laptop   |            2
+ Mouse    |            0
+ Keyboard |            0
+(3 rows)
+
+
+toko_laptop_db=# SELECT
+toko_laptop_db-#     categories.name AS category,
+toko_laptop_db-#     MAX(items.price) AS harga_termahal
+toko_laptop_db-# FROM categories
+toko_laptop_db-# JOIN items
+toko_laptop_db-#     ON items.category_id = categories.id
+toko_laptop_db-# GROUP BY categories.name
+toko_laptop_db-# ORDER BY harga_termahal DESC
+toko_laptop_db-# LIMIT 1;
+ category | harga_termahal
+----------+----------------
+ Laptop   |       25000000
+(1 row)
+
+
+toko_laptop_db=# SELECT id, name, category, category_id FROM items;
+ id |        name        |  category  | category_id
+----+--------------------+------------+-------------
+  3 | Samsung Galaxy S23 | Smartphone |
+  4 | Sony WH-1000XM5    | Headphone  |
+  2 | ASUS ROG Strix G15 | Laptop     |           1
+  1 | MacBook Air M2     | Laptop     |           1
+(4 rows)
+
+
+toko_laptop_db=# INSERT INTO categories (name)
+toko_laptop_db-# VALUES
+toko_laptop_db-# ('Smartphone'),
+toko_laptop_db-# ('Headphone');
+INSERT 0 2
+toko_laptop_db=# UPDATE items SET category_id = 4 WHERE category = 'Smartphone';
+UPDATE 1
+toko_laptop_db=# UPDATE items SET category_id = 5 WHERE category = 'Headphone';
+UPDATE 1
+toko_laptop_db=# SELECT id, name, category, category_id FROM items;
+ id |        name        |  category  | category_id
+----+--------------------+------------+-------------
+  2 | ASUS ROG Strix G15 | Laptop     |           1
+  1 | MacBook Air M2     | Laptop     |           1
+  3 | Samsung Galaxy S23 | Smartphone |           4
+  4 | Sony WH-1000XM5    | Headphone  |           5
+(4 rows)
+
+
+Kuis SQL — Jawaban
+
+Relasi Penulis – Buku (1 penulis banyak buku)
+Jawaban: b. One-to-Many
+
+Fungsi FOREIGN KEY
+Jawaban: b. Menghubungkan satu tabel ke tabel lain
+
+Mengambil data dari dua tabel berelasi
+Jawaban: c. JOIN
+
+JOIN yang hanya menampilkan data jika kedua tabel punya pasangan
+Jawaban: c. INNER JOIN
+
+LEFT JOIN ketika data di tabel kanan tidak ada
+Jawaban: b. Data tabel kanan berisi NULL
+
+Fungsi agregasi untuk menghitung jumlah baris data
+Jawaban: c. COUNT()
+
+GROUP BY biasanya dipakai bersama...
+Jawaban: c. Fungsi Agregasi (COUNT, SUM, dll)
+
+Memfilter hasil setelah GROUP BY
+Jawaban: b. HAVING
+
+Kegunaan LIMIT dan OFFSET
+Jawaban: c. Untuk Pagination (Halaman)
+
+Relasi Many-to-Many membutuhkan...
+Jawaban: c. 3 Tabel (1 tabel pivot/penghubung)
