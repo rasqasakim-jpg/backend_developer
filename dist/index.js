@@ -1,11 +1,6 @@
-import express from "express";
-import dotenv from "dotenv";
-dotenv.config;
-const app = express();
-const HOST = process.env.HOST;
-const PORT = process.env.PORT;
-app.use(express.json());
-app.listen(PORT, () => {
-    console.log(`server running at ${HOST}, ${PORT}`);
+import app from "./app";
+import config from './utils/env';
+app.listen(config.PORT, () => {
+    console.log(`Server jalan di ${config.HOST}${config.PORT}`);
 });
 //# sourceMappingURL=index.js.map
