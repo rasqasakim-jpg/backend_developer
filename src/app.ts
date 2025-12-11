@@ -6,7 +6,7 @@ import cors from 'cors';
 import { errorHandler } from './middlewares/error.handler';
 import { errorResponse, successResponse } from './utils/response';
 import productRouter from './routes/product.route';
-
+import categoryRouter from './routes/category.route';
 
 const app: Application = express();
 
@@ -45,6 +45,7 @@ app.get("/api/error-test", () => {
 });
 
 app.use('/api/products', productRouter)
+app.use('/api/categories', categoryRouter)
 
 // 404 fallback
 app.use((req: Request) => {

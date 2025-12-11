@@ -4,7 +4,7 @@ import { getPrisma } from "../prisma";
 const prisma = getPrisma()
 
 export const getAllProduct = async (): Promise<{ products: Product[], total: number }> => {
-    const products = await prisma.product.findMany()
+    const products = await prisma.product.findMany({include: { category: true } })
     const total = products.length
 
     return {  products, total}
@@ -13,7 +13,8 @@ export const getAllProduct = async (): Promise<{ products: Product[], total: num
 export const getByIdProduct = async (id: string) => {
   const numId = parseInt(id);
   const product = await prisma.product.findUnique({
-    where: { id:numId }
+    where: { id:numId },
+    include: { category: true },
   });
 
   if (!product) {
@@ -35,17 +36,20 @@ export const searchProduct = async (name?: string, min_price?: number, max_price
                 ...(min_price && { gte: min_price }),
                 ...(max_price && { lte: max_price }),
             }
-        }
+        },
+        include: { category: true }
     })
 }
 
-export const createProduct = async(data: {name: string, description?: string, price: number, stock: number}): Promise<Product> => {
+export const createProduct = async(data: {name: string, description?: string, price: number, stock: number, 
+  categoryId?: number}): Promise<Product> => {
     return await prisma.product.create({
       data: {
         name: data.name,
         description: data.description ?? null,
         price: data.price,
-        stock: data.stock
+        stock: data.stock,
+        categoryId: data.categoryId ?? null,
       }
     })
 }
