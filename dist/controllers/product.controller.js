@@ -19,12 +19,13 @@ export const search = async (req, res) => {
     });
 };
 export const create = async (req, res) => {
-    const { name, description, price, stock } = req.body;
+    const { name, description, price, stock, categoryId } = req.body;
     const data = {
         name: String(name),
         description: String(description),
         price: Number(price),
         stock: Number(stock),
+        categoryId: Number(categoryId),
         ...(description && { description: description }),
     };
     const products = await createProduct(data);
@@ -35,7 +36,9 @@ export const update = async (req, res) => {
     successResponse(res, "Berhasil mengupdate data", product);
 };
 export const deleteById = async (req, res) => {
-    const deleted = deleteProduct(req.params.id);
+    if (!req.params.id)
+        throw new Error("id tidak ditemukan");
+    const deleted = await deleteProduct(req.params.id);
     successResponse(res, "Berhasil menghapus data", deleted);
 };
 //# sourceMappingURL=product.controller.js.map

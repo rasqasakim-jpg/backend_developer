@@ -9,8 +9,8 @@ export interface PrismaClientConstructor {
    * @example
    * ```
    * const prisma = new PrismaClient()
-   * // Fetch zero or more Products
-   * const products = await prisma.product.findMany()
+   * // Fetch zero or more Categories
+   * const categories = await prisma.category.findMany()
    * ```
    *
    * Read more in our [docs](https://pris.ly/d/client).
@@ -26,8 +26,8 @@ export interface PrismaClientConstructor {
  * @example
  * ```
  * const prisma = new PrismaClient()
- * // Fetch zero or more Products
- * const products = await prisma.product.findMany()
+ * // Fetch zero or more Categories
+ * const categories = await prisma.category.findMany()
  * ```
  *
  * Read more in our [docs](https://pris.ly/d/client).
@@ -112,13 +112,46 @@ export interface PrismaClient<in LogOpts extends Prisma.LogLevel = never, in out
         extArgs: ExtArgs;
     }>>;
     /**
- * `prisma.product`: Exposes CRUD operations for the **Product** model.
+ * `prisma.category`: Exposes CRUD operations for the **Category** model.
   * Example usage:
   * ```ts
-  * // Fetch zero or more Products
-  * const products = await prisma.product.findMany()
+  * // Fetch zero or more Categories
+  * const categories = await prisma.category.findMany()
   * ```
   */
+    get category(): Prisma.CategoryDelegate<ExtArgs, {
+        omit: OmitOpts;
+    }>;
+    /**
+     * `prisma.order`: Exposes CRUD operations for the **Order** model.
+      * Example usage:
+      * ```ts
+      * // Fetch zero or more Orders
+      * const orders = await prisma.order.findMany()
+      * ```
+      */
+    get order(): Prisma.OrderDelegate<ExtArgs, {
+        omit: OmitOpts;
+    }>;
+    /**
+     * `prisma.orderItem`: Exposes CRUD operations for the **OrderItem** model.
+      * Example usage:
+      * ```ts
+      * // Fetch zero or more OrderItems
+      * const orderItems = await prisma.orderItem.findMany()
+      * ```
+      */
+    get orderItem(): Prisma.OrderItemDelegate<ExtArgs, {
+        omit: OmitOpts;
+    }>;
+    /**
+     * `prisma.product`: Exposes CRUD operations for the **Product** model.
+      * Example usage:
+      * ```ts
+      * // Fetch zero or more Products
+      * const products = await prisma.product.findMany()
+      * ```
+      */
     get product(): Prisma.ProductDelegate<ExtArgs, {
         omit: OmitOpts;
     }>;

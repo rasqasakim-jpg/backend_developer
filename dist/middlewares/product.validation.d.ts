@@ -1,6 +1,3 @@
-import type { NextFunction, Response, Request } from "express";
-import { type ValidationChain } from "express-validator";
-export declare const validate: (rules: ValidationChain[]) => (req: Request, res: Response, next: NextFunction) => Promise<void | Response<any, Record<string, any>>>;
-export declare const productCreateValidation: ValidationChain[];
-export declare const productIdValidation: ValidationChain[];
+export declare const createProductValidation: import("express-validator").ValidationChain[];
+export declare const getProductsByIdValidation: import("express-validator").ValidationChain[];
 //# sourceMappingURL=product.validation.d.ts.map

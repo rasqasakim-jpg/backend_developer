@@ -7,6 +7,8 @@ import { errorHandler } from './middlewares/error.handler';
 import { errorResponse, successResponse } from './utils/response';
 import productRouter from './routes/product.route';
 import categoryRouter from './routes/category.route';
+import orderRouter from './routes/order.routes';
+import orderItemRouter from './routes/order_items.routes';
 
 const app: Application = express();
 
@@ -46,6 +48,8 @@ app.get("/api/error-test", () => {
 
 app.use('/api/products', productRouter)
 app.use('/api/categories', categoryRouter)
+app.use('/api/orders', orderRouter)
+app.use('/api/order-items', orderItemRouter)
 
 // 404 fallback
 app.use((req: Request) => {

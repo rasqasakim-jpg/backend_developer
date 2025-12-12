@@ -68,6 +68,9 @@ export const JsonNull = runtime.JsonNull;
  */
 export const AnyNull = runtime.AnyNull;
 export const ModelName = {
+    Category: 'Category',
+    Order: 'Order',
+    OrderItem: 'OrderItem',
     Product: 'Product'
 };
 /**
@@ -79,14 +82,37 @@ export const TransactionIsolationLevel = runtime.makeStrictEnum({
     RepeatableRead: 'RepeatableRead',
     Serializable: 'Serializable'
 });
+export const CategoryScalarFieldEnum = {
+    id: 'id',
+    name: 'name',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+};
+export const OrderScalarFieldEnum = {
+    id: 'id',
+    user_id: 'user_id',
+    total: 'total',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+};
+export const OrderItemScalarFieldEnum = {
+    id: 'id',
+    order_id: 'order_id',
+    product_id: 'product_id',
+    quantity: 'quantity',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+};
 export const ProductScalarFieldEnum = {
     id: 'id',
     name: 'name',
     description: 'description',
     price: 'price',
     stock: 'stock',
+    categoryId: 'categoryId',
     createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
+    updatedAt: 'updatedAt',
+    deletedAt: 'deletedAt'
 };
 export const SortOrder = {
     asc: 'asc',

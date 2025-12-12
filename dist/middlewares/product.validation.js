@@ -1,23 +1,36 @@
-import { body, param, validationResult } from "express-validator";
-import { errorResponse } from "../utils/response";
-export const validate = (rules) => {
-    return async (req, res, next) => {
-        await Promise.all(rules.map(r => r.run(req)));
-        const errors = validationResult(req);
-        if (errors.isEmpty())
-            return next();
-        return errorResponse(res, "Validasi gagal", 400, errors.array().map(err => ({
-            field: err.type === "field" ? err.path : null,
-            message: err.msg
-        })));
-    };
-};
-export const productCreateValidation = [
-    body("nama").notEmpty().withMessage("Nama wajib diisi").isLength({ min: 3 }).withMessage("Nama minimal 3 karakter"),
-    body("deskripsi").notEmpty().withMessage("Deskripsi wajib diisi"),
-    body("harga").isNumeric().withMessage("Harga harus angka")
+import { body, param } from "express-validator";
+export const createProductValidation = [
+    body('name')
+        .trim()
+        .notEmpty()
+        .withMessage('name wajib diisi')
+        .isLength({ min: 3, max: 100 })
+        .withMessage('name minimal 3 karakter dan maksimal 100'),
+    body('description')
+        .optional()
+        .trim()
+        .isLength({ min: 3 })
+        .withMessage('description minimal 3 karakter'),
+    body('price')
+        .notEmpty()
+        .isNumeric()
+        .toFloat()
+        .withMessage('price wajib diisi')
+        .custom(value => value > 0).withMessage('price harus berupa angka lebih dari 1'),
+    body('stock')
+        .notEmpty()
+        .isNumeric()
+        .withMessage('stock wajib diisi')
+        .custom(value => value >= 0).withMessage('stock harus berupa angka dan minimal 1'),
+    body('categoryId')
+        .notEmpty()
+        .withMessage('categoryId wajib diisi')
+        .isNumeric()
+        .custom(value => value > 0).withMessage('categoryId harus berupa angka lebih dari 1')
 ];
-export const productIdValidation = [
-    param("id").isNumeric().withMessage("ID harus angka")
+export const getProductsByIdValidation = [
+    param('id')
+        .isNumeric()
+        .withMessage('ID harus berupa angka')
 ];
 //# sourceMappingURL=product.validation.js.map

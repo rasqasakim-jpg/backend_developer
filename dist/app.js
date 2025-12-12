@@ -5,6 +5,9 @@ import cors from 'cors';
 import { errorHandler } from './middlewares/error.handler';
 import { errorResponse, successResponse } from './utils/response';
 import productRouter from './routes/product.route';
+import categoryRouter from './routes/category.route';
+import orderRouter from './routes/order.routes';
+import orderItemRouter from './routes/order_items.routes';
 const app = express();
 app.use(helmet());
 app.use(cors());
@@ -33,6 +36,9 @@ app.get("/api/error-test", () => {
     throw new Error("Ini error test!");
 });
 app.use('/api/products', productRouter);
+app.use('/api/categories', categoryRouter);
+app.use('/api/orders', orderRouter);
+app.use('/api/order-items', orderItemRouter);
 // 404 fallback
 app.use((req) => {
     throw new Error(`Route ${req.originalUrl} tidak ditemukan!`);

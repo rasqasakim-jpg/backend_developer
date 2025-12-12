@@ -25,8 +25,8 @@ export * from "./enums";
  * @example
  * ```
  * const prisma = new PrismaClient()
- * // Fetch zero or more Products
- * const products = await prisma.product.findMany()
+ * // Fetch zero or more Categories
+ * const categories = await prisma.category.findMany()
  * ```
  *
  * Read more in our [docs](https://pris.ly/d/client).

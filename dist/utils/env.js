@@ -4,6 +4,6 @@ export default {
     HOST: process.env.HOST,
     PORT: process.env.PORT,
     NODE: process.env.NODE_ENV,
-    DATABASE_URL: process.env.DB_URL
+    DATABASE_URL: process.env.DATABASE_URL
 };
 //# sourceMappingURL=env.js.map
