@@ -1,6 +1,29 @@
 import type { Request, Response } from "express";
 import * as order from "../services/orders.service";
 import { successResponse } from "../utils/response";
+import { checkoutOrder } from "../services/orders.service"
+
+export interface OrderRequest extends Request {
+    userId: number
+    total: number
+    orderItems: OrderItems[]
+}
+
+export interface OrderItems {
+    productId: number
+    quantity: number
+}
+
+export const checkout = async (req: Request, res: Response) => {
+    const result = await checkoutOrder(req.body)
+    successResponse(
+        res,
+        "Order berasil dibuat",
+        result,
+        null,
+        201
+    )
+}
 
 export const getAll = async(_req: Request, res: Response) => {
     const data = await order.getAllOrders();

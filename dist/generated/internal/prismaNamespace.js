@@ -69,9 +69,10 @@ export const JsonNull = runtime.JsonNull;
 export const AnyNull = runtime.AnyNull;
 export const ModelName = {
     Category: 'Category',
+    OrderItems: 'OrderItems',
     Order: 'Order',
-    OrderItem: 'OrderItem',
-    Product: 'Product'
+    Product: 'Product',
+    User: 'User'
 };
 /**
  * Enums
@@ -88,20 +89,22 @@ export const CategoryScalarFieldEnum = {
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
 };
-export const OrderScalarFieldEnum = {
+export const OrderItemsScalarFieldEnum = {
     id: 'id',
-    user_id: 'user_id',
-    total: 'total',
-    createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
-};
-export const OrderItemScalarFieldEnum = {
-    id: 'id',
-    order_id: 'order_id',
-    product_id: 'product_id',
+    orderId: 'orderId',
+    productId: 'productId',
     quantity: 'quantity',
     createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
+    updatedAt: 'updatedAt',
+    deletedAt: 'deletedAt'
+};
+export const OrderScalarFieldEnum = {
+    id: 'id',
+    userId: 'userId',
+    total: 'total',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
+    deletedAt: 'deletedAt'
 };
 export const ProductScalarFieldEnum = {
     id: 'id',
@@ -113,6 +116,12 @@ export const ProductScalarFieldEnum = {
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
     deletedAt: 'deletedAt'
+};
+export const UserScalarFieldEnum = {
+    id: 'id',
+    name: 'name',
+    email: 'email',
+    password_hash: 'password_hash'
 };
 export const SortOrder = {
     asc: 'asc',

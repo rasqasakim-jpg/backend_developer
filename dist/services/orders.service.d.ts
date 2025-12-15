@@ -1,8 +1,14 @@
 import type { Order } from "../generated/client";
-export declare const getAllOrders: () => Promise<Order[]>;
-export declare const getOrderById: (id: number) => Promise<Order>;
-export declare const searchOrders: (userId?: number, maxTotal?: number, minTotal?: number) => Promise<({
-    items: ({
+export interface CreateOrder {
+    userId: number;
+    orderItems: OrderItems[];
+}
+export interface OrderItems {
+    productId: number;
+    quantity: number;
+}
+export declare const checkout: (data: CreateOrder) => Promise<{
+    orderItems: ({
         product: {
             name: string;
             id: number;
@@ -18,22 +24,95 @@ export declare const searchOrders: (userId?: number, maxTotal?: number, minTotal
         id: number;
         createdAt: Date;
         updatedAt: Date;
+        deletedAt: Date | null;
         quantity: import("@prisma/client-runtime-utils").Decimal;
-        product_id: number;
-        order_id: number;
+        productId: number;
+        orderId: number;
     })[];
 } & {
     id: number;
     createdAt: Date;
     updatedAt: Date;
+    deletedAt: Date | null;
     total: import("@prisma/client-runtime-utils").Decimal;
-    user_id: number;
+    userId: number;
+}>;
+export declare const getTransactionById: (id: number) => Promise<({
+    orderItems: ({
+        product: {
+            name: string;
+            id: number;
+            description: string | null;
+            price: import("@prisma/client-runtime-utils").Decimal;
+            stock: number;
+            categoryId: number | null;
+            createdAt: Date;
+            updatedAt: Date;
+            deletedAt: Date | null;
+        };
+    } & {
+        id: number;
+        createdAt: Date;
+        updatedAt: Date;
+        deletedAt: Date | null;
+        quantity: import("@prisma/client-runtime-utils").Decimal;
+        productId: number;
+        orderId: number;
+    })[];
+    user: {
+        name: string;
+        id: number;
+        email: string;
+        password_hash: string;
+    };
+} & {
+    id: number;
+    createdAt: Date;
+    updatedAt: Date;
+    deletedAt: Date | null;
+    total: import("@prisma/client-runtime-utils").Decimal;
+    userId: number;
+}) | null>;
+export declare const getAllOrders: () => Promise<{
+    order: Order[];
+    total: number;
+}>;
+export declare const getOrderById: (id: number) => Promise<Order>;
+export declare const searchOrders: (userId?: number, maxTotal?: number, minTotal?: number) => Promise<({
+    orderItems: ({
+        product: {
+            name: string;
+            id: number;
+            description: string | null;
+            price: import("@prisma/client-runtime-utils").Decimal;
+            stock: number;
+            categoryId: number | null;
+            createdAt: Date;
+            updatedAt: Date;
+            deletedAt: Date | null;
+        };
+    } & {
+        id: number;
+        createdAt: Date;
+        updatedAt: Date;
+        deletedAt: Date | null;
+        quantity: import("@prisma/client-runtime-utils").Decimal;
+        productId: number;
+        orderId: number;
+    })[];
+} & {
+    id: number;
+    createdAt: Date;
+    updatedAt: Date;
+    deletedAt: Date | null;
+    total: import("@prisma/client-runtime-utils").Decimal;
+    userId: number;
 })[]>;
 export declare const createOrder: (userId: number, items: {
     productId: number;
     quantity: number;
 }[]) => Promise<{
-    items: ({
+    orderItems: ({
         product: {
             name: string;
             id: number;
@@ -49,22 +128,24 @@ export declare const createOrder: (userId: number, items: {
         id: number;
         createdAt: Date;
         updatedAt: Date;
+        deletedAt: Date | null;
         quantity: import("@prisma/client-runtime-utils").Decimal;
-        product_id: number;
-        order_id: number;
+        productId: number;
+        orderId: number;
     })[];
 } & {
     id: number;
     createdAt: Date;
     updatedAt: Date;
+    deletedAt: Date | null;
     total: import("@prisma/client-runtime-utils").Decimal;
-    user_id: number;
+    userId: number;
 }>;
 export declare const updateOrder: (id: number, items: {
     productId: number;
     quantity: number;
 }[]) => Promise<{
-    items: ({
+    orderItems: ({
         product: {
             name: string;
             id: number;
@@ -80,16 +161,18 @@ export declare const updateOrder: (id: number, items: {
         id: number;
         createdAt: Date;
         updatedAt: Date;
+        deletedAt: Date | null;
         quantity: import("@prisma/client-runtime-utils").Decimal;
-        product_id: number;
-        order_id: number;
+        productId: number;
+        orderId: number;
     })[];
 } & {
     id: number;
     createdAt: Date;
     updatedAt: Date;
+    deletedAt: Date | null;
     total: import("@prisma/client-runtime-utils").Decimal;
-    user_id: number;
+    userId: number;
 }>;
 export declare const deleteOrder: (id: number) => Promise<Order>;
 //# sourceMappingURL=orders.service.d.ts.map
