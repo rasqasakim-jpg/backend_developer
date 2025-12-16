@@ -696,9 +696,13 @@ export declare const ProductScalarFieldEnum: {
 export type ProductScalarFieldEnum = (typeof ProductScalarFieldEnum)[keyof typeof ProductScalarFieldEnum];
 export declare const UserScalarFieldEnum: {
     readonly id: "id";
+    readonly createdAt: "createdAt";
+    readonly updatedAt: "updatedAt";
+    readonly deletedAt: "deletedAt";
     readonly name: "name";
     readonly email: "email";
     readonly password_hash: "password_hash";
+    readonly role: "role";
 };
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum];
 export declare const SortOrder: {

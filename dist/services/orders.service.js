@@ -1,13 +1,10 @@
 import { getPrisma } from "../prisma";
 const prisma = getPrisma();
-export const checkout = async (data) => {
-    if (!data.orderItems || data.orderItems.length === 0) {
-        throw new Error("order items tidak boleh kosong");
-    }
+export const checkoutOrder = async (data) => {
     return await prisma.$transaction(async (tx) => {
         let total = 0;
         const orderItemsData = [];
-        // 1. Loop setiap item untuk ambil data Product asli (Harga & Stok)
+        // 1. Loop orderItems → ambil product asli
         for (const item of data.orderItems) {
             const product = await tx.product.findUnique({
                 where: { id: item.productId }
@@ -15,54 +12,46 @@ export const checkout = async (data) => {
             if (!product) {
                 throw new Error(`Product ID ${item.productId} not found`);
             }
-            // Validasi Stok (Optional tapi recommended)
+            // 2. Validasi stok
             if (product.stock < item.quantity) {
                 throw new Error(`Insufficient stock for product ${product.name}`);
             }
-            // Hitung Total (Harga DB x Quantity Request)
-            const currentPrice = Number(product.price);
-            total += currentPrice * item.quantity;
-            // Siapkan data untuk disimpan ke table OrderItems
+            // 3. Hitung total dari harga DB
+            const price = Number(product.price);
+            total += price * item.quantity;
+            // 4. Siapkan data orderItems
             orderItemsData.push({
                 productId: item.productId,
                 quantity: item.quantity,
-                priceAtTime: product.price // PENTING: Simpan harga saat transaksi terjadi
             });
-            // Update Stok (Decrement)
+            // 5. Update stok
             await tx.product.update({
                 where: { id: item.productId },
-                data: { stock: { decrement: item.quantity } }
+                data: {
+                    stock: {
+                        decrement: item.quantity
+                    }
+                }
             });
         }
-        // 2. Buat Header Order & Items sekaligus (Nested Write)
+        // 6. Create order + orderItems (nested write)
         const newOrder = await tx.order.create({
             data: {
                 userId: data.userId,
-                total, // Total hasil perhitungan real
+                total,
                 orderItems: {
-                    create: orderItemsData // Insert ke table OrderItems
+                    create: orderItemsData
                 }
             },
             include: {
                 orderItems: {
-                    include: { product: true } // Return response lengkap
+                    include: {
+                        product: true
+                    }
                 }
             }
         });
         return newOrder;
-    });
-};
-export const getTransactionById = async (id) => {
-    return await prisma.order.findUnique({
-        where: { id },
-        include: {
-            user: true,
-            orderItems: {
-                include: {
-                    product: true
-                }
-            }
-        }
     });
 };
 export const getAllOrders = async () => {
@@ -76,6 +65,7 @@ export const getOrderById = async (id) => {
             id
         },
         include: {
+            user: true,
             orderItems: {
                 include: {
                     product: true
@@ -83,7 +73,7 @@ export const getOrderById = async (id) => {
             }
         }
     });
-    if (!data) {
+    if (!data || data.deletedAt !== null) {
         throw new Error("Order tidak ditemukan");
     }
     return data;

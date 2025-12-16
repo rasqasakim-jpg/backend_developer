@@ -4,7 +4,6 @@ import type { Order } from "../generated/client";
 const prisma = getPrisma();
 
 export interface CreateOrder {
-    userId: number
     orderItems: OrderItems[]
 }
 
@@ -13,7 +12,7 @@ export interface OrderItems {
     quantity: number
 }
 
-export const checkoutOrder = async (data: CreateOrder) => {
+export const checkoutOrder = async (data: CreateOrder, userId: number) => {
     return await prisma.$transaction(async (tx) => {
         let total = 0
         const orderItemsData = []
@@ -57,7 +56,7 @@ export const checkoutOrder = async (data: CreateOrder) => {
         // 6. Create order + orderItems (nested write)
         const newOrder = await tx.order.create({
             data: {
-                userId: data.userId,
+                userId: userId,
                 total,
                 orderItems: {
                     create: orderItemsData

@@ -1,15 +1,9 @@
 import * as order from "../services/orders.service";
-import { errorResponse, successResponse } from "../utils/response";
-import { checkout as checkoutOrder } from "../services/orders.service";
+import { successResponse } from "../utils/response";
+import { checkoutOrder } from "../services/orders.service";
 export const checkout = async (req, res) => {
-    try {
-        const data = req.body;
-        const result = await checkoutOrder(data);
-        successResponse(res, "Berhasil melakukan checkout", result, null, 201);
-    }
-    catch (error) {
-        errorResponse(res, "Checkout gagal", 500);
-    }
+    const result = await checkoutOrder(req.body);
+    successResponse(res, "Order berasil dibuat", result, null, 201);
 };
 export const getAll = async (_req, res) => {
     const data = await order.getAllOrders();

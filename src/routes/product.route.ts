@@ -7,7 +7,7 @@ getById,
 search, 
 update 
 } from "../controllers/product.controller";
-import { createProductValidation, getProductsByIdValidation } from "../middlewares/product.validation";
+import { createProductValidation, getProductsByIdValidation } from "../validation/product.validation";
 import { validate } from "../utils/validator";
 
 const router = Router();

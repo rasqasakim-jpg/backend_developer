@@ -7,7 +7,7 @@ export interface OrderItems {
     productId: number;
     quantity: number;
 }
-export declare const checkout: (data: CreateOrder) => Promise<{
+export declare const checkoutOrder: (data: CreateOrder) => Promise<{
     orderItems: ({
         product: {
             name: string;
@@ -37,42 +37,6 @@ export declare const checkout: (data: CreateOrder) => Promise<{
     total: import("@prisma/client-runtime-utils").Decimal;
     userId: number;
 }>;
-export declare const getTransactionById: (id: number) => Promise<({
-    orderItems: ({
-        product: {
-            name: string;
-            id: number;
-            description: string | null;
-            price: import("@prisma/client-runtime-utils").Decimal;
-            stock: number;
-            categoryId: number | null;
-            createdAt: Date;
-            updatedAt: Date;
-            deletedAt: Date | null;
-        };
-    } & {
-        id: number;
-        createdAt: Date;
-        updatedAt: Date;
-        deletedAt: Date | null;
-        quantity: import("@prisma/client-runtime-utils").Decimal;
-        productId: number;
-        orderId: number;
-    })[];
-    user: {
-        name: string;
-        id: number;
-        email: string;
-        password_hash: string;
-    };
-} & {
-    id: number;
-    createdAt: Date;
-    updatedAt: Date;
-    deletedAt: Date | null;
-    total: import("@prisma/client-runtime-utils").Decimal;
-    userId: number;
-}) | null>;
 export declare const getAllOrders: () => Promise<{
     order: Order[];
     total: number;

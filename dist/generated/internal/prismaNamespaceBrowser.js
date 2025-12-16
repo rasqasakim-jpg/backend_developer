@@ -90,9 +90,13 @@ export const ProductScalarFieldEnum = {
 };
 export const UserScalarFieldEnum = {
     id: 'id',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
+    deletedAt: 'deletedAt',
     name: 'name',
     email: 'email',
-    password_hash: 'password_hash'
+    password_hash: 'password_hash',
+    role: 'role'
 };
 export const SortOrder = {
     asc: 'asc',

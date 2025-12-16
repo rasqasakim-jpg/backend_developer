@@ -4,11 +4,12 @@ import morgan from 'morgan';
 import helmet from 'helmet';
 import cors from 'cors';
 import { errorHandler } from './middlewares/error.handler';
-import { errorResponse, successResponse } from './utils/response';
+import { successResponse } from './utils/response';
 import productRouter from './routes/product.route';
 import categoryRouter from './routes/category.route';
 import orderRouter from './routes/order.routes';
 import orderItemRouter from './routes/order_items.routes';
+import authRouter from './routes/auth.route';
 
 const app: Application = express();
 
@@ -19,20 +20,6 @@ app.use(express.json());
 
 app.use((req: Request, _res: Response, next: NextFunction) => {
   req.startTime = Date.now();
-  next();
-});
-
-app.use((req: Request, res: Response, next: NextFunction) => {
-  const apiKey = req.headers["x-api-key"];
-
-  if (!apiKey) {
-    return errorResponse(res, "Header X-API-Key wajib diisi!", 401);
-  }
-
-  if (apiKey !== "secret-api-key-123") {
-    return errorResponse(res, "API Key tidak valid!", 403);
-  }
-
   next();
 });
 
@@ -50,6 +37,7 @@ app.use('/api/products', productRouter)
 app.use('/api/categories', categoryRouter)
 app.use('/api/orders', orderRouter)
 app.use('/api/order-items', orderItemRouter)
+app.use('/api/auth', authRouter)
 
 // 404 fallback
 app.use((req: Request) => {
