@@ -30,6 +30,7 @@ export declare const ModelName: {
     readonly OrderItems: "OrderItems";
     readonly Order: "Order";
     readonly Product: "Product";
+    readonly Profile: "Profile";
     readonly User: "User";
 };
 export type ModelName = (typeof ModelName)[keyof typeof ModelName];
@@ -72,18 +73,31 @@ export declare const ProductScalarFieldEnum: {
     readonly description: "description";
     readonly price: "price";
     readonly stock: "stock";
+    readonly image: "image";
     readonly categoryId: "categoryId";
     readonly createdAt: "createdAt";
     readonly updatedAt: "updatedAt";
     readonly deletedAt: "deletedAt";
 };
 export type ProductScalarFieldEnum = (typeof ProductScalarFieldEnum)[keyof typeof ProductScalarFieldEnum];
-export declare const UserScalarFieldEnum: {
+export declare const ProfileScalarFieldEnum: {
     readonly id: "id";
     readonly createdAt: "createdAt";
     readonly updatedAt: "updatedAt";
     readonly deletedAt: "deletedAt";
     readonly name: "name";
+    readonly gender: "gender";
+    readonly address: "address";
+    readonly profile_picture_url: "profile_picture_url";
+    readonly userId: "userId";
+};
+export type ProfileScalarFieldEnum = (typeof ProfileScalarFieldEnum)[keyof typeof ProfileScalarFieldEnum];
+export declare const UserScalarFieldEnum: {
+    readonly id: "id";
+    readonly createdAt: "createdAt";
+    readonly updatedAt: "updatedAt";
+    readonly deletedAt: "deletedAt";
+    readonly username: "username";
     readonly email: "email";
     readonly password_hash: "password_hash";
     readonly role: "role";

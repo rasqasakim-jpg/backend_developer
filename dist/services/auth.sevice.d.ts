@@ -1,11 +1,11 @@
 export declare const register: (data: {
-    name: string;
+    username: string;
     email: string;
     password: string;
     role?: string;
 }) => Promise<{
     email: string;
-    name: string;
+    username: string;
     role: string;
 }>;
 export declare const login: (data: {
@@ -14,7 +14,7 @@ export declare const login: (data: {
 }) => Promise<{
     userReturn: {
         email: string;
-        name: string;
+        username: string;
         role: string;
     };
     token: string;

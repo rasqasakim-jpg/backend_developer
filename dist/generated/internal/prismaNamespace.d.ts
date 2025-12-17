@@ -235,6 +235,7 @@ export declare const ModelName: {
     readonly OrderItems: "OrderItems";
     readonly Order: "Order";
     readonly Product: "Product";
+    readonly Profile: "Profile";
     readonly User: "User";
 };
 export type ModelName = (typeof ModelName)[keyof typeof ModelName];
@@ -248,7 +249,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         omit: GlobalOmitOptions;
     };
     meta: {
-        modelProps: "category" | "orderItems" | "order" | "product" | "user";
+        modelProps: "category" | "orderItems" | "order" | "product" | "profile" | "user";
         txIsolationLevel: TransactionIsolationLevel;
     };
     model: {
@@ -548,6 +549,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
                 };
             };
         };
+        Profile: {
+            payload: Prisma.$ProfilePayload<ExtArgs>;
+            fields: Prisma.ProfileFieldRefs;
+            operations: {
+                findUnique: {
+                    args: Prisma.ProfileFindUniqueArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$ProfilePayload> | null;
+                };
+                findUniqueOrThrow: {
+                    args: Prisma.ProfileFindUniqueOrThrowArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$ProfilePayload>;
+                };
+                findFirst: {
+                    args: Prisma.ProfileFindFirstArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$ProfilePayload> | null;
+                };
+                findFirstOrThrow: {
+                    args: Prisma.ProfileFindFirstOrThrowArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$ProfilePayload>;
+                };
+                findMany: {
+                    args: Prisma.ProfileFindManyArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$ProfilePayload>[];
+                };
+                create: {
+                    args: Prisma.ProfileCreateArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$ProfilePayload>;
+                };
+                createMany: {
+                    args: Prisma.ProfileCreateManyArgs<ExtArgs>;
+                    result: BatchPayload;
+                };
+                createManyAndReturn: {
+                    args: Prisma.ProfileCreateManyAndReturnArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$ProfilePayload>[];
+                };
+                delete: {
+                    args: Prisma.ProfileDeleteArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$ProfilePayload>;
+                };
+                update: {
+                    args: Prisma.ProfileUpdateArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$ProfilePayload>;
+                };
+                deleteMany: {
+                    args: Prisma.ProfileDeleteManyArgs<ExtArgs>;
+                    result: BatchPayload;
+                };
+                updateMany: {
+                    args: Prisma.ProfileUpdateManyArgs<ExtArgs>;
+                    result: BatchPayload;
+                };
+                updateManyAndReturn: {
+                    args: Prisma.ProfileUpdateManyAndReturnArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$ProfilePayload>[];
+                };
+                upsert: {
+                    args: Prisma.ProfileUpsertArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$ProfilePayload>;
+                };
+                aggregate: {
+                    args: Prisma.ProfileAggregateArgs<ExtArgs>;
+                    result: runtime.Types.Utils.Optional<Prisma.AggregateProfile>;
+                };
+                groupBy: {
+                    args: Prisma.ProfileGroupByArgs<ExtArgs>;
+                    result: runtime.Types.Utils.Optional<Prisma.ProfileGroupByOutputType>[];
+                };
+                count: {
+                    args: Prisma.ProfileCountArgs<ExtArgs>;
+                    result: runtime.Types.Utils.Optional<Prisma.ProfileCountAggregateOutputType> | number;
+                };
+            };
+        };
         User: {
             payload: Prisma.$UserPayload<ExtArgs>;
             fields: Prisma.UserFieldRefs;
@@ -688,18 +763,31 @@ export declare const ProductScalarFieldEnum: {
     readonly description: "description";
     readonly price: "price";
     readonly stock: "stock";
+    readonly image: "image";
     readonly categoryId: "categoryId";
     readonly createdAt: "createdAt";
     readonly updatedAt: "updatedAt";
     readonly deletedAt: "deletedAt";
 };
 export type ProductScalarFieldEnum = (typeof ProductScalarFieldEnum)[keyof typeof ProductScalarFieldEnum];
-export declare const UserScalarFieldEnum: {
+export declare const ProfileScalarFieldEnum: {
     readonly id: "id";
     readonly createdAt: "createdAt";
     readonly updatedAt: "updatedAt";
     readonly deletedAt: "deletedAt";
     readonly name: "name";
+    readonly gender: "gender";
+    readonly address: "address";
+    readonly profile_picture_url: "profile_picture_url";
+    readonly userId: "userId";
+};
+export type ProfileScalarFieldEnum = (typeof ProfileScalarFieldEnum)[keyof typeof ProfileScalarFieldEnum];
+export declare const UserScalarFieldEnum: {
+    readonly id: "id";
+    readonly createdAt: "createdAt";
+    readonly updatedAt: "updatedAt";
+    readonly deletedAt: "deletedAt";
+    readonly username: "username";
     readonly email: "email";
     readonly password_hash: "password_hash";
     readonly role: "role";
@@ -861,6 +949,7 @@ export type GlobalOmitConfig = {
     orderItems?: Prisma.OrderItemsOmit;
     order?: Prisma.OrderOmit;
     product?: Prisma.ProductOmit;
+    profile?: Prisma.ProfileOmit;
     user?: Prisma.UserOmit;
 };
 export type LogLevel = 'info' | 'query' | 'warn' | 'error';

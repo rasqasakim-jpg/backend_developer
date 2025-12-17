@@ -2,7 +2,7 @@ import * as order from "../services/orders.service";
 import { successResponse } from "../utils/response";
 import { checkoutOrder } from "../services/orders.service";
 export const checkout = async (req, res) => {
-    const result = await checkoutOrder(req.body);
+    const result = await checkoutOrder(req.body, req.user.id);
     successResponse(res, "Order berasil dibuat", result, null, 201);
 };
 export const getAll = async (_req, res) => {

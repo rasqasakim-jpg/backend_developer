@@ -9,24 +9,15 @@ update
 } from "../controllers/product.controller";
 import { createProductValidation, getProductsByIdValidation } from "../validation/product.validation";
 import { validate } from "../utils/validator";
+import { authenticate } from "../middlewares/auth.middlewares";
+import { upload } from "../middlewares/upload.middleware";
 
 const router = Router();
-
 router.get("/", getAll );
-
-// GET BY ID + VALIDASI
 router.get("/:id", validate(getProductsByIdValidation),getById );
-
-// GET BY SEARCH
 router.get("/search", search);
-
-// CREATE PRODUK + VALIDASI
-router.post("/", validate(createProductValidation),create );
-
-// UPDATE PRODUK
+router.post("/", authenticate, upload.single('image'), validate(createProductValidation),create );
 router.put("/:id", validate(getProductsByIdValidation),update);
-
-// DELETE PRODUK
 router.delete("/:id", validate(getProductsByIdValidation),deleteById );
 
 export default router;

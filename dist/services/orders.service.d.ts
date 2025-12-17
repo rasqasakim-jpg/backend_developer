@@ -1,13 +1,12 @@
 import type { Order } from "../generated/client";
 export interface CreateOrder {
-    userId: number;
     orderItems: OrderItems[];
 }
 export interface OrderItems {
     productId: number;
     quantity: number;
 }
-export declare const checkoutOrder: (data: CreateOrder) => Promise<{
+export declare const checkoutOrder: (data: CreateOrder, userId: number) => Promise<{
     orderItems: ({
         product: {
             name: string;
@@ -15,6 +14,7 @@ export declare const checkoutOrder: (data: CreateOrder) => Promise<{
             description: string | null;
             price: import("@prisma/client-runtime-utils").Decimal;
             stock: number;
+            image: string;
             categoryId: number | null;
             createdAt: Date;
             updatedAt: Date;
@@ -50,6 +50,7 @@ export declare const searchOrders: (userId?: number, maxTotal?: number, minTotal
             description: string | null;
             price: import("@prisma/client-runtime-utils").Decimal;
             stock: number;
+            image: string;
             categoryId: number | null;
             createdAt: Date;
             updatedAt: Date;
@@ -83,6 +84,7 @@ export declare const createOrder: (userId: number, items: {
             description: string | null;
             price: import("@prisma/client-runtime-utils").Decimal;
             stock: number;
+            image: string;
             categoryId: number | null;
             createdAt: Date;
             updatedAt: Date;
@@ -116,6 +118,7 @@ export declare const updateOrder: (id: number, items: {
             description: string | null;
             price: import("@prisma/client-runtime-utils").Decimal;
             stock: number;
+            image: string;
             categoryId: number | null;
             createdAt: Date;
             updatedAt: Date;
