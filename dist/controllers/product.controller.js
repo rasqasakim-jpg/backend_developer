@@ -1,8 +1,25 @@
 import { createProduct, deleteProduct, getAllProduct, getByIdProduct, searchProduct, updateProduct } from "../services/product.service";
 import { successResponse } from "../utils/response";
-export const getAll = async (_req, res) => {
-    const { products, total } = await getAllProduct();
-    successResponse(res, "Berhasil mengambil data", { jumlah: total, data: products, });
+export const getAll = async (req, res) => {
+    const page = Number(req.query.page) || 1;
+    const limit = Number(req.query.limit) || 10;
+    const search = req.query.search;
+    const sortBy = req.query.sortBy;
+    const sortOrder = req.query.sortOrder || 'desc';
+    const result = await getAllProduct({
+        page,
+        limit,
+        search,
+        sortBy,
+        sortOrder
+    });
+    const pagination = {
+        page: result.currentPage,
+        limit,
+        total: result.total,
+        totalPages: result.totalPages
+    };
+    successResponse(res, "Berhasil mengambil data", result.products, pagination);
 };
 export const getById = async (req, res) => {
     if (!req.params.id)

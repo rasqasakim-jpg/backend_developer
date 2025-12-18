@@ -1,33 +1,43 @@
-import { getPrisma } from '../prisma';
-import config from '../utils/env';
-import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
+// services/user.service.ts
+import { getPrisma } from "../prisma";
 const prisma = getPrisma();
-export const register = async (data) => {
-    const existingUser = await prisma.user.findUnique({ where: { email: data.email } });
-    if (existingUser) {
-        throw new Error("Email sudah terdaftar");
-    }
-    const hashedPassword = await bcrypt.hash(data.password, 10);
-    return await prisma.user.create({
-        data: {
-            email: data.email,
-            username: data.username,
-            password_hash: hashedPassword,
-            role: data.role || "USER"
-        },
+export const getAllUser = async () => {
+    const users = await prisma.user.findMany({
+        where: { deletedAt: null },
+        include: { orders: true }
+    });
+    return { users, total: users.length };
+};
+export const getUserById = async (id) => {
+    return await prisma.user.findUnique({
+        where: { id: parseInt(id) },
+        include: { orders: true }
     });
 };
-export const loginUser = async (data) => {
-    const user = await prisma.user.findUnique({ where: { email: data.email } });
-    if (!user) {
-        throw new Error("Email atau password salah");
+export const createUser = async (username, email, password_hash) => {
+    const exist = await prisma.user.findFirst({
+        where: {
+            OR: [{ username }, { email }],
+            deletedAt: null
+        }
+    });
+    if (exist) {
+        throw new Error("Username atau email sudah digunakan");
     }
-    const isValid = await bcrypt.compare(data.password, user.password_hash);
-    if (!isValid) {
-        throw new Error("Email atau password salah");
-    }
-    const token = jwt.sign({ id: user.id, role: user.role }, config.JWT_SECRET, { expiresIn: '1h' });
-    return { user, token };
+    return await prisma.user.create({
+        data: { username, email, password_hash }
+    });
+};
+export const updateUser = async (id, data) => {
+    return await prisma.user.update({
+        where: { id: parseInt(id), deletedAt: null },
+        data
+    });
+};
+export const deleteUser = async (id) => {
+    return await prisma.user.update({
+        where: { id: parseInt(id), deletedAt: null },
+        data: { deletedAt: new Date() }
+    });
 };
 //# sourceMappingURL=user.service.js.map

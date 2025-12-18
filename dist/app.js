@@ -32,13 +32,13 @@ app.get("/", (req, res) => {
 app.get("/api/error-test", () => {
     throw new Error("Ini error test!");
 });
+app.use('/api/profile', profileRouter);
+app.use('/api/user', userRouter);
 app.use('/api/products', productRouter);
 app.use('/api/categories', categoryRouter);
 app.use('/api/orders', authenticate, orderRouter);
 app.use('/api/order-items', orderItemRouter);
 app.use('/api/auth', authRouter);
-app.use('/api/profile', profileRouter);
-app.use('/api/user', userRouter);
 // 404 fallback
 app.use((req) => {
     throw new Error(`Route ${req.originalUrl} tidak ditemukan!`);

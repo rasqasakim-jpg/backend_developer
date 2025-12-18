@@ -22,7 +22,7 @@ app.use(cors());
 app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.static("public"))
-
+app.set("query parser", "extended")
 app.use(requestLogger);
 
 

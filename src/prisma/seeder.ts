@@ -12,6 +12,7 @@ async function main() {
   await prisma.order.deleteMany();
   await prisma.product.deleteMany();
   await prisma.category.deleteMany();
+  await prisma.profile.deleteMany();
   await prisma.user.deleteMany();
 
   console.log('🧹 Cleaned existing data');
