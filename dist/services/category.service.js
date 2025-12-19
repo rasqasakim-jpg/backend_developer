@@ -1,53 +1,48 @@
-import { getPrisma } from "../prisma";
-const prisma = getPrisma();
+// src/services/category.service.ts
+import * as categoryRepository from "../repository/category.repository";
 export const getAllCategories = async () => {
-    return await prisma.category.findMany();
+    return await categoryRepository.list(0, 100, // default limit (boleh kamu ganti)
+    { deletedAt: null }, { createdAt: "desc" });
 };
 export const getCategoryById = async (id) => {
-    const numId = parseInt(id);
-    return await prisma.category.findUnique({
-        where: { id: numId }
-    });
-};
-export const createCategory = async (name) => {
-    const isExist = await prisma.category.findUnique({ where: { name } });
-    if (isExist)
-        throw new Error("nama kategori sudah ada");
-    return await prisma.category.create({ data: { name } });
-};
-export const updateCategory = async (id, data) => {
-    const numId = parseInt(id);
+    const numId = Number(id);
     if (isNaN(numId))
         throw new Error("id kategori tidak valid");
-    const isExist = await prisma.category.findUnique({
-        where: { id: numId }
-    });
-    if (!isExist)
+    const category = await categoryRepository.findById(numId);
+    if (!category)
+        throw new Error("kategori tidak ditemukan");
+    return category;
+};
+export const createCategory = async (name) => {
+    // cek nama unik
+    const existing = await categoryRepository.list(0, 1, { name, deletedAt: null }, { id: "asc" });
+    if (existing.length > 0) {
+        throw new Error("nama kategori sudah ada");
+    }
+    return await categoryRepository.create({ name });
+};
+export const updateCategory = async (id, data) => {
+    const numId = Number(id);
+    if (isNaN(numId))
+        throw new Error("id kategori tidak valid");
+    const category = await categoryRepository.findById(numId);
+    if (!category)
         throw new Error("kategori tidak ditemukan");
     if (data.name) {
-        const sameName = await prisma.category.findUnique({
-            where: { name: data.name }
-        });
-        if (sameName && sameName.id !== numId) {
+        const [existingCategoryWithSameName] = await categoryRepository.list(0, 1, { name: data.name, deletedAt: null }, { id: "asc" });
+        if (existingCategoryWithSameName && existingCategoryWithSameName.id !== numId) {
             throw new Error("nama kategori sudah ada");
         }
     }
-    return await prisma.category.update({
-        where: { id: numId },
-        data
-    });
+    return await categoryRepository.update(numId, data);
 };
 export const deleteCategory = async (id) => {
-    const numId = parseInt(id);
+    const numId = Number(id);
     if (isNaN(numId))
         throw new Error("id kategori tidak valid");
-    const isExist = await prisma.category.findUnique({
-        where: { id: numId }
-    });
-    if (isExist)
+    const category = await categoryRepository.findById(numId);
+    if (!category)
         throw new Error("kategori tidak ditemukan");
-    return await prisma.category.delete({
-        where: { id: numId }
-    });
+    return await categoryRepository.softDelete(numId);
 };
 //# sourceMappingURL=category.service.js.map

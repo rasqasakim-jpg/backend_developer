@@ -19,6 +19,7 @@ app.use(cors());
 app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.static("public"));
+app.set("query parser", "extended");
 app.use(requestLogger);
 app.use((req, _res, next) => {
     req.startTime = Date.now();

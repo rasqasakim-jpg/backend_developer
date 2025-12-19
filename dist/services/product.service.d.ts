@@ -19,14 +19,15 @@ interface ProductListRespon {
 export declare const getAllProduct: (params: FindAllParams) => Promise<ProductListRespon>;
 export declare const getByIdProduct: (id: string) => Promise<{
     category: {
-        name: string;
         id: number;
+        name: string;
         createdAt: Date;
         updatedAt: Date;
+        deletedAt: Date | null;
     } | null;
 } & {
-    name: string;
     id: number;
+    name: string;
     description: string | null;
     price: import("@prisma/client-runtime-utils").Decimal;
     stock: number;
@@ -36,7 +37,6 @@ export declare const getByIdProduct: (id: string) => Promise<{
     updatedAt: Date;
     deletedAt: Date | null;
 }>;
-export declare const searchProduct: (name?: string, min_price?: number, max_price?: number) => Promise<Product[]>;
 export declare const createProduct: (data: {
     name: string;
     description?: string;

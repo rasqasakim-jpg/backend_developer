@@ -9,8 +9,8 @@ export interface OrderItems {
 export declare const checkoutOrder: (data: CreateOrder, userId: number) => Promise<{
     orderItems: ({
         product: {
-            name: string;
             id: number;
+            name: string;
             description: string | null;
             price: import("@prisma/client-runtime-utils").Decimal;
             stock: number;
@@ -45,8 +45,8 @@ export declare const getOrderById: (id: number) => Promise<Order>;
 export declare const searchOrders: (userId?: number, maxTotal?: number, minTotal?: number) => Promise<({
     orderItems: ({
         product: {
-            name: string;
             id: number;
+            name: string;
             description: string | null;
             price: import("@prisma/client-runtime-utils").Decimal;
             stock: number;
@@ -79,8 +79,8 @@ export declare const createOrder: (userId: number, items: {
 }[]) => Promise<{
     orderItems: ({
         product: {
-            name: string;
             id: number;
+            name: string;
             description: string | null;
             price: import("@prisma/client-runtime-utils").Decimal;
             stock: number;
@@ -113,8 +113,8 @@ export declare const updateOrder: (id: number, items: {
 }[]) => Promise<{
     orderItems: ({
         product: {
-            name: string;
             id: number;
+            name: string;
             description: string | null;
             price: import("@prisma/client-runtime-utils").Decimal;
             stock: number;

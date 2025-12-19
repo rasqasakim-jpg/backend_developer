@@ -1,4 +1,5 @@
-export declare const getAllCategories: () => Promise<({
+import type { Prisma } from "../generated/client";
+export declare const list: (skip: number, take: number, where: Prisma.CategoryWhereInput, orderBy: Prisma.CategoryOrderByWithRelationInput) => Promise<({
     products: {
         id: number;
         name: string;
@@ -18,7 +19,8 @@ export declare const getAllCategories: () => Promise<({
     updatedAt: Date;
     deletedAt: Date | null;
 })[]>;
-export declare const getCategoryById: (id: string) => Promise<{
+export declare const countAll: (where: Prisma.CategoryWhereInput) => Promise<number>;
+export declare const findById: (id: number) => Promise<({
     products: {
         id: number;
         name: string;
@@ -37,28 +39,26 @@ export declare const getCategoryById: (id: string) => Promise<{
     createdAt: Date;
     updatedAt: Date;
     deletedAt: Date | null;
-}>;
-export declare const createCategory: (name: string) => Promise<{
+}) | null>;
+export declare const create: (data: Prisma.CategoryCreateInput) => Promise<{
     id: number;
     name: string;
     createdAt: Date;
     updatedAt: Date;
     deletedAt: Date | null;
 }>;
-export declare const updateCategory: (id: string, data: {
-    name?: string;
-}) => Promise<{
+export declare const update: (id: number, data: Prisma.CategoryUpdateInput) => Promise<{
     id: number;
     name: string;
     createdAt: Date;
     updatedAt: Date;
     deletedAt: Date | null;
 }>;
-export declare const deleteCategory: (id: string) => Promise<{
+export declare const softDelete: (id: number) => Promise<{
     id: number;
     name: string;
     createdAt: Date;
     updatedAt: Date;
     deletedAt: Date | null;
 }>;
-//# sourceMappingURL=category.service.d.ts.map
+//# sourceMappingURL=category.repository.d.ts.map

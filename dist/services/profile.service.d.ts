@@ -18,8 +18,8 @@ export declare const getProfileById: (id: number) => Promise<({
         role: string;
     };
 } & {
-    name: string;
     id: number;
+    name: string;
     createdAt: Date;
     updatedAt: Date;
     deletedAt: Date | null;
@@ -29,8 +29,8 @@ export declare const getProfileById: (id: number) => Promise<({
     profile_picture_url: string | null;
 }) | null>;
 export declare const updateProfile: (id: number, data: Partial<Profile>) => Promise<{
-    name: string;
     id: number;
+    name: string;
     createdAt: Date;
     updatedAt: Date;
     deletedAt: Date | null;
@@ -40,8 +40,8 @@ export declare const updateProfile: (id: number, data: Partial<Profile>) => Prom
     profile_picture_url: string | null;
 }>;
 export declare const deleteProfile: (id: number) => Promise<{
-    name: string;
     id: number;
+    name: string;
     createdAt: Date;
     updatedAt: Date;
     deletedAt: Date | null;

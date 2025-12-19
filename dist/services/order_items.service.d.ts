@@ -3,8 +3,8 @@ export declare const getAllItems: () => Promise<OrderItems[]>;
 export declare const getItemById: (id: number) => Promise<OrderItems>;
 export declare const searchItems: (orderId?: number, productId?: number, minQty?: number, maxQty?: number) => Promise<({
     product: {
-        name: string;
         id: number;
+        name: string;
         description: string | null;
         price: import("@prisma/client-runtime-utils").Decimal;
         stock: number;

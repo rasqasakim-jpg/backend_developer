@@ -1,21 +1,18 @@
-import { getPrisma } from "../prisma";
 import config from "../utils/env";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-const prisma = getPrisma();
+import * as authRepository from "../repository/auth.repository";
 export const register = async (data) => {
-    const existingUser = await prisma.user.findUnique({ where: { email: data.email } });
+    const existingUser = await authRepository.findByEmail(data.email);
     if (existingUser) {
         throw new Error("Email sudah terdaftar");
     }
     const hashedPassword = await bcrypt.hash(data.password, 10);
-    const user = await prisma.user.create({
-        data: {
-            username: data.username,
-            email: data.email,
-            password_hash: hashedPassword,
-            role: data.role || "USER"
-        },
+    const user = await authRepository.create({
+        username: data.username,
+        email: data.email,
+        password_hash: hashedPassword,
+        role: data.role || "USER"
     });
     return {
         email: user.email,
@@ -24,9 +21,7 @@ export const register = async (data) => {
     };
 };
 export const login = async (data) => {
-    const user = await prisma.user.findUnique({
-        where: { email: data.email }
-    });
+    const user = await authRepository.findByEmail(data.email);
     if (!user) {
         throw new Error("Email atau password salah");
     }

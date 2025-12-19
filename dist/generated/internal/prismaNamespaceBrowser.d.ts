@@ -46,6 +46,7 @@ export declare const CategoryScalarFieldEnum: {
     readonly name: "name";
     readonly createdAt: "createdAt";
     readonly updatedAt: "updatedAt";
+    readonly deletedAt: "deletedAt";
 };
 export type CategoryScalarFieldEnum = (typeof CategoryScalarFieldEnum)[keyof typeof CategoryScalarFieldEnum];
 export declare const OrderItemsScalarFieldEnum: {

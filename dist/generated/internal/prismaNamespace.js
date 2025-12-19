@@ -88,7 +88,8 @@ export const CategoryScalarFieldEnum = {
     id: 'id',
     name: 'name',
     createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
+    updatedAt: 'updatedAt',
+    deletedAt: 'deletedAt'
 };
 export const OrderItemsScalarFieldEnum = {
     id: 'id',
